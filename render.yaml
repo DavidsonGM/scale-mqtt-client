@@ -1,18 +1,18 @@
 databases:
-  - name: scale-mqtt-client
-    databaseName: scale-mqtt-client
-    user: scale-mqtt-client
+  - name: scale_mqtt_client
+    databaseName: scale_mqtt_client
+    user: davidson
 
 services:
   - type: web
-    name: scale-mqtt-client
+    name: scale_mqtt_client
     runtime: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: scale-mqtt-client
+          name: scale_mqtt_client
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
