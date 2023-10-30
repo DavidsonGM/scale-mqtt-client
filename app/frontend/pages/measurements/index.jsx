@@ -24,7 +24,7 @@ const valueInKg = (value) => {
 };
 
 const MeasurementsDashboard = ({ measurements }) => {
-
+  console.log(measurements);
   const chartOptions = {
     chart: { type: "line" },
     xaxis: {
@@ -52,7 +52,7 @@ const MeasurementsDashboard = ({ measurements }) => {
                 options={chartOptions}
                 series={chartSeries}
                 width={1000}
-                // height={500}
+                height={500}
             />
         )}
       </Container>
