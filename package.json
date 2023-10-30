@@ -1,11 +1,23 @@
 {
+  "scripts": {
+    "lint": "eslint 'app/frontend/**/*.{js,jsx}'",
+    "lint:fix": "eslint --fix 'app/frontend/**/*.{js,jsx}'"
+  },
   "devDependencies": {
     "vite": "^4.5.0",
     "vite-plugin-ruby": "^3.2.2"
   },
   "dependencies": {
     "@inertiajs/react": "^1.0.13",
+    "apexcharts": "^3.44.0",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.0.3",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "styled-components": "^6.1.0"
   }

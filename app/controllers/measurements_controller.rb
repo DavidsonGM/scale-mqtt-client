@@ -1,5 +1,6 @@
 class MeasurementsController < ApplicationController
   def index
-    render inertia: 'measurements/index', props: { measurements: Measurement.pluck("value", "created_at") }
+    measurements = Measurement.order(:created_at).pluck('value', 'created_at')
+    render inertia: 'measurements/index', props: { measurements: }
   end
 end
