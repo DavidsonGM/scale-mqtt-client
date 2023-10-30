@@ -18,13 +18,12 @@ const formatDateTime = (dateTime) => {
 };
 
 const valueInKg = (value) => {
-  if (!value) return;
+  if (!value) return 0;
 
   return (value / 1000).toFixed(2);
 };
 
 const MeasurementsDashboard = ({ measurements }) => {
-  console.log(measurements);
 
   const chartOptions = {
     chart: { type: "line" },
