@@ -71,4 +71,9 @@ group :test do
   gem "webdrivers"
 end
 
+# MQTT Client
 gem "mqtt" #, :git => "https://github.com/njh/ruby-mqtt.git"
+
+# Adapter for working with react and rails as a monolith app
+gem "inertia_rails"
+gem "vite_rails"
