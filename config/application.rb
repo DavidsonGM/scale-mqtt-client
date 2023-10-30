@@ -12,7 +12,7 @@ module MqttClient
     config.load_defaults 7.0
 
     config.after_initialize do
-      if defined?(::Rails::Server) || ENV.fetch('RAILS_ENV') == 'development'
+      if defined?(::Rails::Server) || ENV.fetch('RAILS_ENV') == 'production'
         subscriber = MqttSubscriber.new
         subscriber.run
       end
