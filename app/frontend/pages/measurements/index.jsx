@@ -1,4 +1,7 @@
 import React from "react";
+import { Head } from "@inertiajs/react";
+import { Container } from "./styles";
+import GlobalStyle from "../global";
 
 const formatDateTime = (dateTime) => {
   if(!dateTime) return;
@@ -23,15 +26,17 @@ const valueInKg = (value) => {
 };
 
 const MeasurementsDashboard = ({ measurements }) => {
-    console.log(measurements);
-  return(
-      <div>
-
-          <h1>Medições da balança</h1>
-          <h3>{measurements.length} Medições captadas</h3>
-          <h3>Última medição ({formatDateTime(measurements[measurements.length - 1]?.[1])}): {valueInKg(measurements[measurements.length - 1]?.[0])}</h3>
-      </div>
-  )
+    return(
+        <>
+            <GlobalStyle />
+            <Container>
+                <Head title="Scale Dashboard" />
+                <h1>Medições da balança</h1>
+                <h3>{measurements.length} Medições captadas</h3>
+                <h3>Última medição ({formatDateTime(measurements[measurements.length - 1]?.[1])}): {valueInKg(measurements[measurements.length - 1]?.[0])}</h3>
+            </Container>
+        </>
+    );
 };
 
 export default MeasurementsDashboard;
