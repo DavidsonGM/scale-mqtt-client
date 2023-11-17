@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'measurements#index'
+  get "ping", to: "application#ping"
 end
