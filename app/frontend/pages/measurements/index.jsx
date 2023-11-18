@@ -13,7 +13,7 @@ const formatDateTime = (dateTime) => {
     month: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC",
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 };
 
@@ -24,6 +24,7 @@ const valueInKg = (value) => {
 };
 
 const MeasurementsDashboard = ({ measurements }) => {
+  console.log(measurements);
 
   const chartOptions = {
     chart: { type: "line" },
