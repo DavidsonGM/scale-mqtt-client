@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'measurements#index'
   get "ping", to: "application#ping"
+  delete 'clear_cache', to: "measurements#clear_cache"
 end

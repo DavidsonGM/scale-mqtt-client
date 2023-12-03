@@ -7,20 +7,32 @@ export const Page = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  gap: 2rem;
+  gap: 1rem;
 `;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;  
+  h4 {
+    font-size: 1.25rem;
+    color: var(--light-primary);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  padding: 0 2rem;
+`
 
 export const SelectBox = styled.div`
   width: 100%;
-  max-width: 30rem;
-  align-self: flex-end;
+  max-width: 40rem;
   align-items: center;
   display: flex;
   gap: 1rem;
   z-index: 12;
-  justify-content: flex-end;
-  
-  h5 { color: var(--light-primary) }
 `;
 
 export const ChartContainer = styled.div`
@@ -36,13 +48,14 @@ export const MeasurementsChart = styled.div`
   gap: 2rem;
   padding: 2rem 5rem 0;
   width: 100%;
+  align-items: center;
   
-  h1 { color: var(--light-primary) }
+  h1 { color: var(--light-secondary) }
 `;
 
 export const Statistics = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: space-between;
   width: 100%;
 `
@@ -52,10 +65,13 @@ export const StatisticCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 12.5rem;
+  min-height: 11rem;
   justify-content: space-around;
   
-  h3 { font-size: 1.5rem }
+  h3 {
+    font-size: 1.5rem;
+    color: var(--light-secondary);
+  }
   
   span { 
     font-size: 4rem;

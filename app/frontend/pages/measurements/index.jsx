@@ -1,11 +1,12 @@
 import React, {useCallback} from "react";
 import {Head, router} from "@inertiajs/react";
-import {ChartContainer, MeasurementsChart, Page, SelectBox, Statistics, StatisticCard} from "./styles";
+import {ChartContainer, Header, MeasurementsChart, Page, SelectBox, Statistics, StatisticCard} from "./styles";
 import GlobalStyle from "../global";
 import Chart from "react-apexcharts"
 import Select from 'react-select'
 import Card from "@/components/Card";
 import { FaClock } from "react-icons/fa";
+import { RiRefreshFill } from "react-icons/ri";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import { TbMathMax } from "react-icons/tb";
 
@@ -28,9 +29,9 @@ const valueInKg = (value) => {
   return (value / 1000).toFixed(2);
 };
 
-const MeasurementsDashboard = ({ measurements, statistics }) => {
+const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
   const options = [
-    { value: null, label: 'Todas as medições' },
+    { value: "", label: 'Todas as medições' },
     { value: 15, label: '15 minutos' },
     { value: 30, label: '30 minutos' },
     { value: 60, label: '1 hora' },
@@ -60,11 +61,12 @@ const MeasurementsDashboard = ({ measurements, statistics }) => {
   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
   const selectStyles = {
-    control: base => ({...base, height: 30, minHeight: 30}),
+    control: base => ({...base, height: 30, minHeight: 30, backgroundColor: "var(--light-primary)", borderColor: "var(--light-primary)"}),
     valueContainer: (provided) => ({
       ...provided,
       height: 30,
-      padding: '0 6px'
+      padding: '0 6px',
+      // backgroundColor: "blue"
     }),
 
     input: (provided) => ({
@@ -85,21 +87,27 @@ const MeasurementsDashboard = ({ measurements, statistics }) => {
       <Head title="Scale Dashboard" />
       <GlobalStyle />
       <Page>
+        <Header>
+          <SelectBox>
+            <h4>Filtrar por intervalo de tempo</h4>
+            <div style={{width: "50%"}}>
+              <Select
+                  options={options}
+                  styles={selectStyles}
+                  onChange={(e) => filterMeasurements(e.value)}
+              />
+            </div>
+          </SelectBox>
+          <h4>
+            Atualizado em: {formatDateTime(lastUpdate)}
+            <RiRefreshFill style={{cursor: "pointer"}} onClick={() => router.delete("/clear_cache")}/>
+          </h4>
+        </Header>
+
         <Card style={{flex: 4 }}>
           <MeasurementsChart>
             <div style={{display: "flex", justifyContent: "space-between"}}>
               <h1>Medições da balança</h1>
-
-              <SelectBox>
-                <h5>Filtrar por intervalo de tempo</h5>
-                <div style={{width: "50%"}}>
-                  <Select
-                      options={options}
-                      styles={selectStyles}
-                      onChange={(e) => filterMeasurements(e.value)}
-                  />
-                </div>
-              </SelectBox>
             </div>
             <ChartContainer>
               {measurements.length === 0 ? (
@@ -135,14 +143,23 @@ const MeasurementsDashboard = ({ measurements, statistics }) => {
             </StatisticCard>
           </Card>
           <Card>
-          <StatisticCard>
-            <h3>Estimativa para próxima coleta</h3>
-            <span>
-              <FaClock />
-              {statistics.fill_prevision}
-            </span>
-          </StatisticCard>
-        </Card>
+            <StatisticCard>
+              <h3>Variação média (Últimos 7 dias)</h3>
+              <span>
+                {statistics.average_growth < 0 ? <FaArrowTrendDown color="red"/> : <FaArrowTrendUp color="green"/>}
+                {Math.round(statistics.average_growth * 10000) / 100} %
+              </span>
+            </StatisticCard>
+          </Card>
+          <Card>
+            <StatisticCard>
+              <h3>Estimativa para próxima coleta</h3>
+              <span>
+                <FaClock />
+                {statistics.fill_prevision}
+              </span>
+            </StatisticCard>
+          </Card>
         </Statistics>
       </Page>
     </>
