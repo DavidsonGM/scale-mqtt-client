@@ -2,28 +2,25 @@ import styled from "styled-components";
 
 export const Page = styled.section`
   min-height: 100vh;
-  background-color: var(--dark-primary);
+  background-color: var(--dark-secondary);
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  justify-content: center;
   align-items: center;
-
-  h1 { color: var(--light-primary) }
-  
+  padding: 2rem;
+  gap: 2rem;
 `;
 
-export const SelectBox = styled.section`
-  width: 90%;
+export const SelectBox = styled.div`
+  width: 100%;
   max-width: 30rem;
   align-self: flex-end;
-  margin: 0 4rem;
+  align-items: center;
   display: flex;
-  flex-direction: column;
   gap: 1rem;
   z-index: 12;
+  justify-content: flex-end;
   
-  h4 { color: var(--light-primary) }
+  h5 { color: var(--light-primary) }
 `;
 
 export const ChartContainer = styled.div`
@@ -31,4 +28,41 @@ export const ChartContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const MeasurementsChart = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 5rem 0;
+  width: 100%;
+  
+  h1 { color: var(--light-primary) }
+`;
+
+export const Statistics = styled.div`
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  width: 100%;
 `
+
+export const StatisticCard = styled.div`
+  color: var(--light-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 12.5rem;
+  justify-content: space-around;
+  
+  h3 { font-size: 1.5rem }
+  
+  span { 
+    font-size: 4rem;
+    //margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }  
+`
+
