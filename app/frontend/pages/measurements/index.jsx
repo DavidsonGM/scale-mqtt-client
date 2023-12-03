@@ -40,7 +40,7 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
     { value: 480, label: '8 horas' }
   ]
 
-  const filterMeasurements = useCallback((timeFilter) => router.get(`/?time_interval=${timeFilter}`, {}, { preserveState: true}), []);
+  const filterMeasurements = useCallback((timeFilter) => router.get(`/?time_interval=${timeFilter}`, {}, { preserveState: true }), []);
 
   const chartOptions = {
     chart: { type: "line" },
@@ -58,7 +58,6 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
   }];
 
   const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
   const selectStyles = {
     control: base => ({...base, height: 30, minHeight: 30, backgroundColor: "var(--light-primary)", borderColor: "var(--light-primary)"}),
@@ -82,6 +81,10 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
     }),
   }
 
+  const timeInterval = (new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  })).time_interval;
+
   return (
     <>
       <Head title="Scale Dashboard" />
@@ -100,7 +103,7 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
           </SelectBox>
           <h4>
             Atualizado em: {formatDateTime(lastUpdate)}
-            <RiRefreshFill style={{cursor: "pointer"}} onClick={() => router.delete("/clear_cache")}/>
+            <RiRefreshFill style={{cursor: "pointer"}} onClick={() => router.delete("/clear_cache", { data: { time_interval: timeInterval }})}/>
           </h4>
         </Header>
 
