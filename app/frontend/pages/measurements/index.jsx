@@ -1,8 +1,9 @@
-import React from "react";
-import {Head} from "@inertiajs/react";
-import {Container} from "./styles";
+import React, {useCallback, useState} from "react";
+import {Head, router} from "@inertiajs/react";
+import {ChartContainer, Page, SelectBox} from "./styles";
 import GlobalStyle from "../global";
 import Chart from "react-apexcharts"
+import Select from 'react-select'
 
 const formatDateTime = (dateTime) => {
   if (!dateTime) return;
@@ -24,7 +25,19 @@ const valueInKg = (value) => {
 };
 
 const MeasurementsDashboard = ({ measurements }) => {
-  console.log(measurements);
+  // const [timeFilter, setTimeFilter] = useState(null);
+
+  const options = [
+    { value: null, label: 'Todas as medições' },
+    { value: 15, label: '15 minutos' },
+    { value: 30, label: '30 minutos' },
+    { value: 60, label: '1 hora' },
+    { value: 120, label: '2 horas' },
+    { value: 240, label: '4 horas' },
+    { value: 480, label: '8 horas' }
+  ]
+
+  const filterMeasurements = useCallback((timeFilter) => router.get(`/?time_interval=${timeFilter}`, {}, { preserveState: true}), []);
 
   const chartOptions = {
     chart: { type: "line" },
@@ -40,23 +53,31 @@ const MeasurementsDashboard = ({ measurements }) => {
     name: "Peso (Kg)",
     data: measurements.map((m) => valueInKg(m[0])),
   }];
+
   return (
     <>
       <Head title="Scale Dashboard" />
       <GlobalStyle />
-      <Container>
+      <Page>
         <h1>Medições da balança</h1>
-        {measurements.length === 0 ? (
-          <h3>Sem dados até o momento</h3>
-        ) : (
-            <Chart
-                options={chartOptions}
-                series={chartSeries}
-                width={1000}
-                height={500}
-            />
-        )}
-      </Container>
+
+        <SelectBox>
+          <h4>Filtrar por intervalo de tempo</h4>
+          <Select options={options} onChange={(e) => filterMeasurements(e.value)}/>
+        </SelectBox>
+        <ChartContainer>
+          {measurements.length === 0 ? (
+              <h3>Sem dados até o momento</h3>
+          ) : (
+              <Chart
+                  options={chartOptions}
+                  series={chartSeries}
+                  width={1000}
+                  height={500}
+              />
+          )}
+        </ChartContainer>
+      </Page>
     </>
   );
 };
