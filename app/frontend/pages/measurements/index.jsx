@@ -162,7 +162,7 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
               <h3>Valor máximo (Últimos 7 dias)</h3>
               <span>
                 <TbMathMax />
-                {valueInKg(statistics.max)} Kg
+                {valueInKg(statistics.max)} kg
               </span>
             </StatisticCard>
           </Card>
@@ -188,7 +188,7 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
                 ) : (
                   <FaArrowTrendUp color="green" />
                 )}
-                {Math.round(statistics.average_growth * 10000) / 100} %
+                {valueInKg(statistics.average_growth)} kg/h
               </span>
             </StatisticCard>
           </Card>
