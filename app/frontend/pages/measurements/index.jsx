@@ -1,9 +1,17 @@
-import React, {useCallback} from "react";
-import {Head, router} from "@inertiajs/react";
-import {ChartContainer, Header, MeasurementsChart, Page, SelectBox, Statistics, StatisticCard} from "./styles";
+import React, { useCallback } from "react";
+import { Head, router } from "@inertiajs/react";
+import {
+  ChartContainer,
+  Header,
+  MeasurementsChart,
+  Page,
+  SelectBox,
+  Statistics,
+  StatisticCard,
+} from "./styles";
 import GlobalStyle from "../global";
-import Chart from "react-apexcharts"
-import Select from 'react-select'
+import Chart from "react-apexcharts";
+import Select from "react-select";
 import Card from "@/components/Card";
 import { FaClock } from "react-icons/fa";
 import { RiRefreshFill } from "react-icons/ri";
@@ -31,16 +39,20 @@ const valueInKg = (value) => {
 
 const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
   const options = [
-    { value: "", label: 'Todas as medições' },
-    { value: 15, label: '15 minutos' },
-    { value: 30, label: '30 minutos' },
-    { value: 60, label: '1 hora' },
-    { value: 120, label: '2 horas' },
-    { value: 240, label: '4 horas' },
-    { value: 480, label: '8 horas' }
-  ]
+    { value: "", label: "Todas as medições" },
+    { value: 15, label: "15 minutos" },
+    { value: 30, label: "30 minutos" },
+    { value: 60, label: "1 hora" },
+    { value: 120, label: "2 horas" },
+    { value: 240, label: "4 horas" },
+    { value: 480, label: "8 horas" },
+  ];
 
-  const filterMeasurements = useCallback((timeFilter) => router.get(`/?time_interval=${timeFilter}`, {}, { preserveState: true }), []);
+  const filterMeasurements = useCallback(
+    (timeFilter) =>
+      router.get(`/?time_interval=${timeFilter}`, {}, { preserveState: true }),
+    [],
+  );
 
   const chartOptions = {
     chart: { type: "line" },
@@ -48,23 +60,34 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
       categories: measurements.map((m) => formatDateTime(m[1])),
       labels: { style: { colors: "var(--light-primary)" } },
     },
-    yaxis: {labels: {style: {colors: "var(--light-primary)" }}},
+    yaxis: { labels: { style: { colors: "var(--light-primary)" } } },
     stroke: { curve: "smooth" },
-  }
+  };
 
-  const chartSeries = [{
-    name: "Peso (Kg)",
-    data: measurements.map((m) => valueInKg(m[0])),
-  }];
+  const chartSeries = [
+    {
+      name: "Peso (Kg)",
+      data: measurements.map((m) => valueInKg(m[0])),
+    },
+  ];
 
-  const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  const vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0,
+  );
 
   const selectStyles = {
-    control: base => ({...base, height: 30, minHeight: 30, backgroundColor: "var(--light-primary)", borderColor: "var(--light-primary)"}),
+    control: (base) => ({
+      ...base,
+      height: 30,
+      minHeight: 30,
+      backgroundColor: "var(--light-primary)",
+      borderColor: "var(--light-primary)",
+    }),
     valueContainer: (provided) => ({
       ...provided,
       height: 30,
-      padding: '0 6px',
+      padding: "0 6px",
       // backgroundColor: "blue"
     }),
 
@@ -73,17 +96,13 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
       // margin: '0px',
     }),
     indicatorSeparator: () => ({
-      display: 'none',
+      display: "none",
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
       height: 25,
     }),
-  }
-
-  const timeInterval = (new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  })).time_interval;
+  };
 
   return (
     <>
@@ -93,35 +112,46 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
         <Header>
           <SelectBox>
             <h4>Filtrar por intervalo de tempo</h4>
-            <div style={{width: "50%"}}>
+            <div style={{ width: "50%" }}>
               <Select
-                  options={options}
-                  styles={selectStyles}
-                  onChange={(e) => filterMeasurements(e.value)}
+                options={options}
+                styles={selectStyles}
+                onChange={(e) => filterMeasurements(e.value)}
               />
             </div>
           </SelectBox>
           <h4>
             Atualizado em: {formatDateTime(lastUpdate)}
-            <RiRefreshFill style={{cursor: "pointer"}} onClick={() => router.delete("/clear_cache", { data: { time_interval: timeInterval }})}/>
+            <RiRefreshFill
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                router.delete("/clear_cache", {
+                  data: {
+                    time_interval: new URLSearchParams(
+                      window.location.search,
+                    ).get("time_interval"),
+                  },
+                })
+              }
+            />
           </h4>
         </Header>
 
-        <Card style={{flex: 4 }}>
+        <Card style={{ flex: 4 }}>
           <MeasurementsChart>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <h1>Medições da balança</h1>
             </div>
             <ChartContainer>
               {measurements.length === 0 ? (
-                  <h3>Sem dados até o momento</h3>
+                <h3>Sem dados até o momento</h3>
               ) : (
-                  <Chart
-                      options={chartOptions}
-                      series={chartSeries}
-                      width={0.9 * vw}
-                      height={480}
-                  />
+                <Chart
+                  options={chartOptions}
+                  series={chartSeries}
+                  width={0.9 * vw}
+                  height={480}
+                />
               )}
             </ChartContainer>
           </MeasurementsChart>
@@ -140,7 +170,11 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
             <StatisticCard>
               <h3>Variação (Última medição)</h3>
               <span>
-                {statistics.growth < 0 ? <FaArrowTrendDown color="red"/> : <FaArrowTrendUp color="green"/>}
+                {statistics.growth < 0 ? (
+                  <FaArrowTrendDown color="red" />
+                ) : (
+                  <FaArrowTrendUp color="green" />
+                )}
                 {Math.round(statistics.growth * 10000) / 100} %
               </span>
             </StatisticCard>
@@ -149,7 +183,11 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
             <StatisticCard>
               <h3>Variação média (Últimos 7 dias)</h3>
               <span>
-                {statistics.average_growth < 0 ? <FaArrowTrendDown color="red"/> : <FaArrowTrendUp color="green"/>}
+                {statistics.average_growth < 0 ? (
+                  <FaArrowTrendDown color="red" />
+                ) : (
+                  <FaArrowTrendUp color="green" />
+                )}
                 {Math.round(statistics.average_growth * 10000) / 100} %
               </span>
             </StatisticCard>

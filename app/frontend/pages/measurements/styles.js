@@ -14,7 +14,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  align-items: center;  
+  align-items: center;
   h4 {
     font-size: 1.25rem;
     color: var(--light-primary);
@@ -22,9 +22,9 @@ export const Header = styled.div`
     align-items: center;
     gap: 1rem;
   }
-  
+
   padding: 0 2rem;
-`
+`;
 
 export const SelectBox = styled.div`
   width: 100%;
@@ -49,8 +49,10 @@ export const MeasurementsChart = styled.div`
   padding: 2rem 5rem 0;
   width: 100%;
   align-items: center;
-  
-  h1 { color: var(--light-secondary) }
+
+  h1 {
+    color: var(--light-secondary);
+  }
 `;
 
 export const Statistics = styled.div`
@@ -58,7 +60,7 @@ export const Statistics = styled.div`
   gap: 1rem;
   justify-content: space-between;
   width: 100%;
-`
+`;
 
 export const StatisticCard = styled.div`
   color: var(--light-primary);
@@ -67,18 +69,17 @@ export const StatisticCard = styled.div`
   align-items: center;
   min-height: 11rem;
   justify-content: space-around;
-  
+
   h3 {
     font-size: 1.5rem;
     color: var(--light-secondary);
   }
-  
-  span { 
+
+  span {
     font-size: 4rem;
     //margin-top: 4rem;
     display: flex;
     justify-content: center;
     gap: 2rem;
-  }  
-`
-
+  }
+`;
