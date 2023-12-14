@@ -11,7 +11,7 @@ class MeasurementsController < ApplicationController
     end
 
     render inertia: 'measurements/index', props: {
-      measurements: @measurements,
+      measurements: @measurements.last(500),
       statistics: { max:, growth:, fill_prevision:, average_growth: },
       lastUpdate: @@last_update
     }
@@ -55,11 +55,16 @@ class MeasurementsController < ApplicationController
   end
 
   def growth
+    return 0 unless @measurements.second_to_last
+
     ((@measurements.last[0].to_f / @measurements.second_to_last[0]) - 1)
   end
 
   def average_growth
     last_measurements = @measurements.select { |m| m[1] > Time.zone.now - 1.week }
+
+    return 0 if last_measurements.size < 2
+
     variation = 0
     (1..last_measurements.size - 1).each do |idx|
       current_growth = last_measurements[idx][0] - last_measurements[idx - 1][0]
@@ -73,7 +78,7 @@ class MeasurementsController < ApplicationController
   def fill_prevision
     # medida + crescimento_hora * n = max
     # n = (max - m)/crescimento_hora
-    fill_prevision = if average_growth.negative? || max.zero?
+    fill_prevision = if average_growth <= 0 || max.zero?
                        'Indeterminado'
                      else
                        (max - @measurements.last[0]) / average_growth
@@ -81,7 +86,7 @@ class MeasurementsController < ApplicationController
 
     if fill_prevision.is_a?(Float)
       fill_prevision = if fill_prevision < 24
-                         "#{fill_prevision.round(2)} horas"
+                         "#{fill_prevision.round(2)} h"
                        else
                          "#{(fill_prevision / 24).round(2)} dias"
                        end

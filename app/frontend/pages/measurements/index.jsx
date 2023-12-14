@@ -76,6 +76,8 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
     window.innerWidth || 0,
   );
 
+  const chartWidth = vw > 720 ? 0.9 * vw : 0.8 * vw;
+
   const selectStyles = {
     control: (base) => ({
       ...base,
@@ -149,7 +151,7 @@ const MeasurementsDashboard = ({ measurements, statistics, lastUpdate }) => {
                 <Chart
                   options={chartOptions}
                   series={chartSeries}
-                  width={0.9 * vw}
+                  width={chartWidth}
                   height={480}
                 />
               )}

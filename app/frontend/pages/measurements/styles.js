@@ -24,6 +24,18 @@ export const Header = styled.div`
   }
 
   padding: 0 2rem;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0;
+  }
+
+  @media (max-width: 720px) {
+    h4 {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const SelectBox = styled.div`
@@ -49,6 +61,7 @@ export const MeasurementsChart = styled.div`
   padding: 2rem 5rem 0;
   width: 100%;
   align-items: center;
+  text-align: center;
 
   h1 {
     color: var(--light-secondary);
@@ -58,8 +71,10 @@ export const MeasurementsChart = styled.div`
 export const Statistics = styled.div`
   display: flex;
   gap: 1rem;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
+  flex-wrap: wrap;
+  //align-items: center;
 `;
 
 export const StatisticCard = styled.div`
@@ -71,15 +86,24 @@ export const StatisticCard = styled.div`
   justify-content: space-around;
 
   h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: var(--light-secondary);
   }
 
   span {
-    font-size: 4rem;
-    //margin-top: 4rem;
+    font-size: 3.25rem;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 1700px) {
+    h3 {
+      font-size: 1rem;
+    }
+    span {
+      font-size: 2.5rem;
+      gap: 1rem;
+    }
   }
 `;
